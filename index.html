@@ -8,15 +8,70 @@
 </head>
 
 <body>
-    <select name="year" id="year">
-        <option value="year1">Year 1</option>
-        <option value="year2">Year 2</option>
-    </select>
-    <div></div>
+    <div id="select-set">
+        <select id="year" onchange="updateLessons()">
+        </select>
+        <select id="lesson" onchange="updateCards()">
+        </select>
+    </div>
+    <div id="cards">
+    </div>
 </body>
 <script>
-    const data = require('./flashcards.json');
-    console.log(data);
+    const yearBox = document.getElementById("year");
+    const lessonBox = document.getElementById("lesson");
+    const cards = document.getElementById("cards");
+    var data = {};
+
+    // updates lesson dropdown box to match the year
+    function updateLessons() {
+        year = yearBox.value;
+
+        lessonBox.options.length = 0;
+        for (var lesson in data[year]) {
+            let newLesson = document.createElement("OPTION");
+            newLesson.text = lesson;
+            newLesson.value = lesson;
+
+            lessonBox.options.add(newLesson);
+        }
+
+        updateCards();
+    }
+
+    // updates card selection to current year and lesson
+    function updateCards() {
+        year = yearBox.value;
+        lesson = lessonBox.value;
+
+        cards.innerHTML = "";
+
+        for (card in data[year][lesson]) {
+            cards.innerHTML += `<h1>${data[year][lesson][card][0]}</h1>`;
+        }
+    }
+
+
+    // fetching flashcards json from github
+    fetch('/flashcards.json')
+        .then(response => response.json())
+        .then(resp => {
+            data = resp;
+
+            // creating year dropdown box
+            for (var year in data) {
+                let newYear = document.createElement("OPTION");
+                newYear.text = year;
+                newYear.value = year;
+
+                yearBox.options.add(newYear);
+            }
+
+            // starts at Year 1
+            updateLessons("Year 1");
+        })
+
+
 </script>
 
 </html>
