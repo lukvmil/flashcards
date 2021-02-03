@@ -3,7 +3,23 @@
 
 <head>
     <style>
+        select {
+            width: 200px;
+            height: 50px;
+            text-align: center;
+        }
 
+        .card {
+            border: thin solid black;
+            border-radius: 16px;
+            height: 150px;
+            width: 120px;
+            margin-bottom: 16px;
+            margin-top: 16px;
+            display: grid;
+            align-items: center;
+            justify-items: center;
+        }
     </style>
 </head>
 
@@ -15,6 +31,7 @@
         </select>
     </div>
     <div id="cards">
+        <div class="card">test</div>
     </div>
 </body>
 <script>
@@ -44,7 +61,7 @@
         year = yearBox.value;
         lesson = lessonBox.value;
 
-        cards.innerHTML = "";
+        // cards.innerHTML = "";
 
         for (card in data[year][lesson]) {
             cards.innerHTML += `<h1>${data[year][lesson][card][0]}</h1>`;
