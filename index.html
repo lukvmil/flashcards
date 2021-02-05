@@ -138,6 +138,8 @@
         lesson = lessonBox.value;
 
         stack = data[year][lesson];
+        card.side = studyBox.value;
+
         updateCard();
     }
 
@@ -158,6 +160,7 @@
             current_card++;
         }
         card.side = studyBox.value;
+
         updateCard();
     }
 
