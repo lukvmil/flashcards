@@ -24,6 +24,7 @@
             grid-template-columns: 100px 600px 100px;
             cursor: pointer;
             margin-top: 100px;
+
         }
 
         .card-content {
@@ -33,32 +34,50 @@
             width: 600px;
             height: 400px;
 
-            background: #ACACAC;
+            background: #7E8CAC;
             align-content: center;
-            justify-content: center;
-
+            /* justify-content: center; */
+            text-align: center;
         }
 
         .card-content:hover {
-            background: #a0a0a0;
+            background: #9DA6BA;
+            filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+
+        }
+
+        .shadow {
+            filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
         }
 
         .arrow {
             width: 100px;
             height: 400px;
 
-            background: #ACACAC;
+            background: #7E8CAC;
+            display: grid;
+            align-content: center;
+            justify-content: center;
+
+            -ms-user-select: none;
+            -moz-user-select: none;
+            -webkit-user-select: none;
+            -webkit-touch-callout: none;
+            -khtml-user-select: none;
+            user-select: none;
         }
 
         .arrow:hover {
-            background: #a0a0a0;
-        }
+            background: #9DA6BA;
+            filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
 
-        .left {
-            border-radius: 0px 40px 40px 0px;
         }
 
         .right {
+            border-radius: 0px 40px 40px 0px;
+        }
+
+        .left {
             border-radius: 40px 0px 0px 40px;
         }
     </style>
@@ -77,10 +96,10 @@
         </div>
     </div>
     <div class="center-card">
-        <div id="card" class="card">
-            <div class="arrow right" onclick="prevCard()"></div>
+        <div id="card" side="front" class="card shadow">
+            <div class="arrow left" onclick="prevCard()">◀</div>
             <div id="card-content" class="card-content" onclick="flipCard()"></div>
-            <div class="arrow left" onclick="nextCard()"></div>
+            <div class="arrow right" onclick="nextCard()">▶</div>
         </div>
     </div>
 
@@ -122,6 +141,7 @@
 
     function updateCard() {
         card_content.innerHTML = stack[current_card][0];
+        card.side = "front";
     }
 
     function nextCard() {
@@ -139,7 +159,13 @@
     }
 
     function flipCard() {
-        card_content.innerHTML = `${stack[current_card][1]}\n${stack[current_card][2]}`;
+        if (card.side == "front") {
+            card_content.innerHTML = `${stack[current_card][1]}<br>${stack[current_card][2]}`;
+            card.side = "back";
+        } else {
+            card_content.innerHTML = stack[current_card][0];
+            card.side = "front";
+        }
 
     }
 
