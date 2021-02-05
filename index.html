@@ -46,6 +46,13 @@
 
         }
 
+        .card-counter {
+            position: relative;
+            bottom: 375px;
+            text-align: center;
+            font-size: 25px;
+        }
+
         .shadow {
             filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
         }
@@ -100,6 +107,7 @@
             <div class="arrow left" onclick="prevCard()">◀</div>
             <div id="card-content" class="card-content" onclick="flipCard()"></div>
             <div class="arrow right" onclick="nextCard()">▶</div>
+            <div id="card-counter" class="card-counter"></div>
         </div>
     </div>
 
@@ -110,6 +118,7 @@
     const studyBox = document.getElementById("study");
     const card = document.getElementById("card");
     const card_content = document.getElementById("card-content");
+    const card_counter = document.getElementById("card-counter");
 
     var data = {};
     var stack = [];
@@ -138,25 +147,24 @@
         lesson = lessonBox.value;
 
         stack = data[year][lesson];
-        card.side = studyBox.value;
 
+        current_card = 0;
+
+        card.side = studyBox.value;
         updateCard();
     }
 
     function updateCard() {
+        updateCount();
         if (card.side == "front") {
             card_content.innerHTML = stack[current_card][0];
         } else {
             card_content.innerHTML = `${stack[current_card][1]}<br>${stack[current_card][2]}`;
         }
-        // card_content.innerHTML = stack[current_card][0];
-        // if (studyBox.value == "writing") {
-        //     flipCard();
-        // }
     }
 
     function nextCard() {
-        if (current_card < stack.length) {
+        if (current_card < stack.length - 1) {
             current_card++;
         }
         card.side = studyBox.value;
@@ -179,6 +187,10 @@
             card.side = "front";
         }
         updateCard();
+    }
+
+    function updateCount() {
+        card_counter.innerHTML = `${current_card + 1}/${stack.length}`;
     }
 
     // fetching flashcards json from github
