@@ -89,9 +89,9 @@
         <div class="select-set">
             <select id="year" onchange="updateLessons()"></select>
             <select id="lesson" onchange="updateStack()"></select>
-            <select id="type">
-                <option>Study Reading</option>
-                <option>Study Writing</option>
+            <select id="study" onchange="flipCard()">
+                <option value="front">Study Reading</option>
+                <option value="back">Study Writing</option>
             </select>
         </div>
     </div>
@@ -107,6 +107,8 @@
 <script>
     const yearBox = document.getElementById("year");
     const lessonBox = document.getElementById("lesson");
+    const studyBox = document.getElementById("study");
+    const card = document.getElementById("card");
     const card_content = document.getElementById("card-content");
 
     var data = {};
@@ -140,14 +142,22 @@
     }
 
     function updateCard() {
-        card_content.innerHTML = stack[current_card][0];
-        card.side = "front";
+        if (card.side == "front") {
+            card_content.innerHTML = stack[current_card][0];
+        } else {
+            card_content.innerHTML = `${stack[current_card][1]}<br>${stack[current_card][2]}`;
+        }
+        // card_content.innerHTML = stack[current_card][0];
+        // if (studyBox.value == "writing") {
+        //     flipCard();
+        // }
     }
 
     function nextCard() {
         if (current_card < stack.length) {
             current_card++;
         }
+        card.side = studyBox.value;
         updateCard();
     }
 
@@ -155,18 +165,17 @@
         if (current_card > 0) {
             current_card--;
         }
+        card.side = studyBox.value;
         updateCard();
     }
 
     function flipCard() {
         if (card.side == "front") {
-            card_content.innerHTML = `${stack[current_card][1]}<br>${stack[current_card][2]}`;
             card.side = "back";
         } else {
-            card_content.innerHTML = stack[current_card][0];
             card.side = "front";
         }
-
+        updateCard();
     }
 
     // fetching flashcards json from github
