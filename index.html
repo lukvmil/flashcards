@@ -124,6 +124,18 @@
     var stack = [];
     var current_card = 0;
 
+    document.onkeydown = (e) => {
+        e = e || window.event;
+
+        if (e.keyCode === 39) {
+            nextCard();
+        } else if (e.keyCode === 37) {
+            prevCard();
+        } else if (e.keyCode === 38 || e.keyCode === 40 || e.keyCode === 32) {
+            flipCard();
+        }
+    }
+
     // updates lesson dropdown box to match the year
     function updateLessons() {
         year = yearBox.value;
