@@ -24,18 +24,14 @@ curr_year = flashcards[f'Year {years}']
 # --------------------------------------------
 # loading lessons 
 
-lessons = len(curr_year.keys())    
+lesson = list(curr_year.keys())[-1]
 
-if lessons == 0:
-    curr_year['Lesson 1'] = []
-    lessons = 1
-
-curr_lesson = curr_year[f'Lesson {lessons}']
+curr_lesson = curr_year[lesson]
 
 # --------------------------------------------
 
 while True:
-    print(f'Year {years}, Lesson {lessons}')
+    print(f'Year {years}, {lesson}')
     print('(enter: add to current location, lesson: add lesson, year: add year, quit: quit)')
     ui = input()
     
