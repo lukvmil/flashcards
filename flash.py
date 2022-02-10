@@ -55,9 +55,22 @@ while True:
             
     elif ui == 'lesson':
         if curr_lesson:
-            lessons = len(curr_year.keys()) + 1
-            curr_year[f'Lesson {lessons}'] = []
-            curr_lesson = curr_year[f'Lesson {lessons}']
+            while True:
+                print('Lesson number? ', end='')
+                try:
+                    lesson_number = int(input())
+                    new_lesson = f'Lesson {lesson_number}'
+                    if new_lesson in curr_year:
+                        print('Lesson already exists')
+                        continue
+                    else:
+                        break
+                except ValueError:
+                    continue
+            
+            lesson = new_lesson
+            curr_year[new_lesson] = []
+            curr_lesson = curr_year[new_lesson]
         else:
             print('current lesson is empty')
         print()
